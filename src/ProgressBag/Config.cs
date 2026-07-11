@@ -49,12 +49,27 @@ public class Config : JsonConfigBase<Config>
 
     protected override void SetDefault()
     {
+        var bagIds = new Dictionary<string, int>
+        {
+            {"史莱姆王", 3318}, {"克苏鲁之眼", 3319}, {"世界吞噬怪", 3320},
+            {"克苏鲁之脑", 3321}, {"蜂王", 3322}, {"骷髅王", 3323},
+            {"血肉墙", 3324}, {"毁灭者", 3325}, {"双子魔眼", 3326},
+            {"机械骷髅王", 3327}, {"世纪之花", 3328}, {"石巨人", 3329},
+            {"猪龙鱼公爵", 3330}, {"拜月教邪教徒", 3331}, {"月亮领主", 3332},
+            {"双足翼龙", 3860}, {"光之女皇", 4782}, {"史莱姆皇后", 4957},
+            {"独眼巨鹿", 5111}
+        };
         foreach (var (name, _) in GameProgress.DefaultProgressNames)
         {
             Bag bag = new();
             bag.Limit.Add(name);
-            bag.Name = name + "礼包";
-            bag.Award.Add(new Award());
+            bag.Name = name + "宝藏袋";
+            bag.Award.Add(new Award
+            {
+                netID = bagIds.TryGetValue(name, out var id) ? id : 22,
+                stack = 1,
+                prefix = 0
+            });
             this.Bag.Add(bag);
         }
     }
